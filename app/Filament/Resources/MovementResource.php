@@ -23,6 +23,7 @@ class MovementResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-swatch';
     protected static ?string $modelLabel = 'Movimiento';
+    // protected static ?string $navigationGroup = 'Almacen';
 
     public static function form(Form $form): Form
     {

@@ -10,6 +10,8 @@ use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
+use Spatie\Browsershot\Browsershot;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class MovimientoDiario extends Page
 {
@@ -75,5 +77,13 @@ class MovimientoDiario extends Page
 
                     ])->columns(2)
             ]);
+    }
+    public function createPDF()
+    {
+        Browsershot::url('https://example.com')
+            ->setIncludePath('$PATH:/home/linux/.nvm/versions/node/v20.16.0/bin')
+            ->save('example.pdf');
+        // $pdf = Pdf::view('pdf.movimiento-diario');
+        // return $pdf;
     }
 }

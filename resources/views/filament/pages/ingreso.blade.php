@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <form wire:submit="create">
+    <form wire:submit="createPDF">
         <div class="flex justify-end mb-4">
             <x-filament::button type='submit'>
                 Registra entrada

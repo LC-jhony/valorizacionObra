@@ -1,7 +1,8 @@
 <x-filament-panels::page>
     <form wire:submit="createPDF">
-        <div class="flex justify-end">
-            <x-filament::button type="submit" icon="heroicon-o-document">Crear reporte</x-filament::button>
+        <div class="flex justify-end mb-4">
+            <x-filament::button type="submit" icon="heroicon-o-document" color="success">Crear
+                reporte</x-filament::button>
         </div>
         {{ $this->form }}
     </form>

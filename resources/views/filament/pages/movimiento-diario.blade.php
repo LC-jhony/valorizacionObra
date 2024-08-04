@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <form wire:submit="createPDF">
+    <form wire:submit="createPDF" id="pdfForm">
         <div class="flex justify-end mb-4">
             <x-filament::button type="submit" icon="heroicon-o-document" color="success">Crear
                 reporte</x-filament::button>
@@ -11,49 +11,37 @@
             Mes:<p class="uppercase">{{ $monthName }}</p>
         </div>
     </x-filament::card>
-    <div class="shadow overflow-y-scroll border-b border-gray-200 dark:border-gray-700 sm:rounded-lg">
-
+    <div class="shadow overflow-y-scroll border-b 
+    border-gray-200 dark:border-gray-700 sm:rounded-lg">
         <x-table>
             <x-slot name="head">
-                <x-th>COD.</x-th>
-                <x-th>DESCRIPCION.</x-th>
-                <x-th>P.U</x-th>
-                <x-th>U.M.</x-th>
-                <x-th>ENTRADA / SALIDA</x-th>
-                <x-th>O/C</x-th>
+                <x-th>Cod.</x-th>
+                <x-th>Descripcion</x-th>
+                <x-th>p.u.</x-th>
+                <x-th>u.m</x-th>
+                <x-th>ingreso y <br /> egreso</x-th>
+                <x-th>o/c</x-th>
                 @for ($i = 1; $i <= $daysInMonth; $i++)
-                    @if (!$date || $date == \Carbon\Carbon::createFromDate(null, $month, $i)->toDateString())
-                        <x-th class="">
-                            {{ substr(\Carbon\Carbon::createFromDate(null, $month, $i)->translatedFormat('D'), 0, 1) }}
-                            <p class="">{{ $i }}</p>
-                        </x-th>
-                    @endif
+                    <x-th>
+                        {{ substr(\Carbon\Carbon::createFromDate(null, $month, $i)->translatedFormat('D'), 0, 1) }}
+                        <p>{{ $i }}</p>
+                    </x-th>
                 @endfor
             </x-slot>
             @foreach ($categoriesWithProducts as $category)
                 <tr>
-                    <x-th>
-                        {{ $category->id }}
-                    </x-th>
-                    <x-th>
-                        {{ $category->name }}
-                    </x-th>
-                    <th <th
-                        class="px-6 py-3 text-left text-xs bg-gray-300 font-medium whitespace-nowrap text-gray-500 uppercase
-tracking-wider dark:bg-gray-900 dark:text-gray-400"
-                        colspan="100%"></th>
+                    <x-th>{{ $category->id }}</x-th>
+                    <x-th align="lefth">{{ $category->name }}</x-th>
+                    <x-th colspan="100%"></x-th>
                 </tr>
                 @foreach ($category->materials as $product)
                     <tr>
-                        <td class="px-6 py-4 text-sm font-medium" rowspan="2">{{ $product->code }}</td>
-                        <td class="px-6 py-4 text-sm font-medium" rowspan="2">{{ $product->name }}</td>
-                        <td class="px-6 py-4 text-sm font-medium" rowspan="2">{{ $product->pu }}</td>
-                        <td class="px-6 py-4 text-sm font-medium" rowspan="2">{{ $product->um }}</td>
-                        <td class="px-6 py-4 text-sm font-medium">Entrada</td>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-500 bg-gray-200 dark:bg-gray-900 dark:text-gray-400"
-                            rowspan="2">
-                            {{ $product->order->number }}
-                        </td>
+                        <x-td rowspan="2">{{ $product->code }}</x-td>
+                        <x-td rowspan="2">{{ $product->name }}</x-td>
+                        <x-td rowspan="2">{{ $product->pu }}</x-td>
+                        <x-td rowspan="2">{{ $product->um }}</x-td>
+                        <x-td>Entrada</x-td>
+                        <x-th rowspan="2"> {{ $product->order->number }}</x-th>
                         @for ($i = 1; $i <= $daysInMonth; $i++)
                             @php
                                 $date = \Carbon\Carbon::createFromDate(null, $month, $i)->format('Y-m-d');
@@ -67,10 +55,7 @@ tracking-wider dark:bg-gray-900 dark:text-gray-400"
                         @endfor
                     </tr>
                     <tr>
-                        <td
-                            class="px-6 py-4 text-sm font-medium text-gray-500 bg-gray-200 dark:bg-gray-900 dark:text-gray-400">
-                            Salida
-                        </td>
+                        <x-th>Salida</x-th>
                         @for ($i = 1; $i <= $daysInMonth; $i++)
                             @php
                                 $date = \Carbon\Carbon::createFromDate(null, $month, $i)->format('Y-m-d');
@@ -80,14 +65,12 @@ tracking-wider dark:bg-gray-900 dark:text-gray-400"
                                     ->where('movement.tipo', 'salida')
                                     ->sum('quantity');
                             @endphp
-                            <td
-                                class="px-6 py-4 text-sm font-medium text-gray-200 bg-gray-200  dark:bg-gray-900 dark:text-gray-400">
-                                {{ $salidaQuantity ?: ' ' }}</td>
+                            <x-th> {{ $salidaQuantity ?: ' ' }}</x-th>
                         @endfor
                     </tr>
                 @endforeach
             @endforeach
         </x-table>
-
     </div>
+
 </x-filament-panels::page>

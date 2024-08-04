@@ -6,7 +6,9 @@
             'light' => 'text-right',
             'center' => 'text-center',
         ][$align] ?? 'text-left';
+
 @endphp
-<td class="px-6 py-4 text-sm font-medium dark:text-white {{ $textAlignClass }}">
+
+<td class="px-6 py-4 text-sm font-medium dark:text-white {{ $textAlignClass }}" {{ $attributes }}>
     {{ $slot }}
 </td>

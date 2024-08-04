@@ -3,7 +3,7 @@
     $textAlignClass =
         [
             'left' => 'text-left',
-            'light' => 'text-right',
+            'right' => 'text-right',
             'center' => 'text-center',
         ][$align] ?? 'text-left';
 @endphp

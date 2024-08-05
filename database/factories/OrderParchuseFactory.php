@@ -17,7 +17,8 @@ class OrderParchuseFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'number' => $this->faker->unique()->numberBetween('0####'),
+            'status' => $this->faker->boolean(),
         ];
     }
 }
